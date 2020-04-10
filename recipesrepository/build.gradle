@@ -1,0 +1,27 @@
+apply plugin: 'java-library'
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation project(":recipesdomain")
+    implementation project(":recipesnetwork")
+    implementation project(":recipesroom")
+
+    /** Kodein */
+    implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.4'
+
+    /**
+     * Testing
+     */
+    testImplementation 'junit:junit:4.13'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
