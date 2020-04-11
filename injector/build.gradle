@@ -8,11 +8,27 @@ dependencies {
     /** Kodein */
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.4'
 
-    implementation project(":network")
-    implementation project(":recipesdomain")
-    implementation project(":recipesrepository")
-    implementation project(":recipesnetwork")
-    implementation project(":recipesroom")
+    /** Fluxy */
+    implementation "com.github.hoop-carpool.fluxy:fluxy:0.1.0"
+    implementation "com.github.hoop-carpool.fluxy:timberlogger:0.1.0"
+
+    /** Retrofit */
+    implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.8.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.5.0'
+
+    /** Moshi */
+    implementation "com.squareup.moshi:moshi:1.9.2"
+    implementation "com.squareup.moshi:moshi-kotlin:1.9.2"
+    implementation "com.squareup.moshi:moshi-adapters:1.9.2"
+
+    api project(":network")
+    api project(":recipesdomain")
+    api project(":recipesrepository")
+    api project(":recipesnetwork")
+    api project(":recipesroom")
+    api project(":common")
 }
 
 compileKotlin {

@@ -2,7 +2,6 @@ package com.danielceinos.todolist
 
 import android.app.Application
 import com.danielceinos.injector.DependenciesModule
-import com.danielceinos.network.NetworkModule
 import com.danielceinos.room.RoomModule
 import com.danielceinos.todolist.di.AppModule
 import com.danielceinos.todolist.di.FluxModule
@@ -44,7 +43,6 @@ class App : Application(), KodeinAware {
             addImport(AppModule.create())
             addImport(ViewModelsModule.create())
             addImport(FluxModule.create())
-            addImport(NetworkModule.create())
             addImport(RoomModule.create())
             addImport(DependenciesModule.create())
         }

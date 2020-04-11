@@ -5,8 +5,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    implementation project(":common")
-
     /** Kodein */
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.4'
 

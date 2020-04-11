@@ -1,5 +1,6 @@
-package com.danielceinos.network.interceptors
+package com.danielceinos.injector
 
+import com.danielceinos.network.interceptors.AuthenticatorInterceptor
 import okhttp3.Interceptor
 import org.kodein.di.Kodein
 import org.kodein.di.generic.bind
@@ -14,6 +15,6 @@ object InterceptorsModule {
     fun create() = Kodein.Module("interceptors", true) {
         bind() from setBinding<Interceptor>()
 
-        bind<Interceptor>().inSet() with singleton { AuthenticatorInterceptor(kodein) }
+        bind<Interceptor>().inSet() with singleton { AuthenticatorInterceptor() }
     }
 }

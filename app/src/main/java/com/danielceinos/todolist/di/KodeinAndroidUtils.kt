@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import org.kodein.di.DKodein
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -29,7 +28,7 @@ inline fun <reified T : ViewModel> Kodein.Builder.bindViewModel(overrides: Boole
  *
  * Optionally you can decide if you want all instances to be force-provided by module bindings or
  * if you allow creating new instances of them via [Class.newInstance] with [allowNewInstance].
- * The default is true to mimic the default behaviour of [ViewModelProviders.of].
+ * The default is true to mimic the default behaviour of [ViewModelProvider].
  */
 class KodeinViewModelFactory(
     private val injector: DKodein,

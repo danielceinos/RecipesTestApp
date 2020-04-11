@@ -1,4 +1,4 @@
-package com.danielceinos.common
+package com.danielceinos.injector
 
 import com.hoopcarpool.fluxy.FluxyStore
 import org.kodein.di.Kodein

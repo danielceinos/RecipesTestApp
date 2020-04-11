@@ -1,6 +1,5 @@
-package com.danielceinos.notesdomain
+package com.danielceinos.injector
 
-import com.danielceinos.common.bindStore
 import com.danielceinos.notesdomain.flux.RecipesController
 import com.danielceinos.notesdomain.flux.RecipesStore
 import org.kodein.di.Kodein

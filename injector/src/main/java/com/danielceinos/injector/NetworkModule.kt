@@ -1,7 +1,7 @@
-package com.danielceinos.network
+package com.danielceinos.injector
 
 import com.danielceinos.common.AppLogger
-import com.danielceinos.network.interceptors.InterceptorsModule
+import com.danielceinos.network.CustomHttpLoggerInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
