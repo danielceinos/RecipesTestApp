@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.danielceinos.todolist.databinding.RecipeRowBinding
 import com.danielceinos.todolist.features.recipeslist.RecipesListViewState.Recipe
-import timber.log.Timber
 
 class RecipesAdapter(
-    private val onItemClickListener: (Recipe) -> Unit
+    private val onItemClickListener: (Recipe) -> Unit,
+    private val onItemFavClickListener: (Recipe) -> Unit
 ) :
     ListAdapter<Recipe, RecipesAdapter.ItemViewHolder>(DiffCallback()) {
 
@@ -19,19 +19,23 @@ class RecipesAdapter(
             .run { ItemViewHolder(this) }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(getItem(position), onItemClickListener)
+        holder.bind(getItem(position))
     }
 
     inner class ItemViewHolder(private val binding: RecipeRowBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Recipe, onItemClickListener: (Recipe) -> Unit) {
+        fun bind(item: Recipe) {
             with(item) {
                 binding.recipeRowTitle.text = title
                 binding.recipeRowFavCheckbox.isChecked = fav
+                binding.recipeRowCard.setOnClickListener {
+                    onItemClickListener(this)
+                }
             }
 
+            //TODO: use check listener
             binding.recipeRowFavCheckbox.setOnClickListener {
-                onItemClickListener(item)
+                onItemFavClickListener(item)
             }
         }
     }

@@ -16,7 +16,11 @@
     </fragment>
     <fragment
         android:id="@+id/detailFragment"
-        android:name="com.danielceinos.todolist.features.notesdetail.DetailFragment"
+        android:name="com.danielceinos.todolist.features.recipesdetail.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="recipeid"
+            app:argType="integer" />
+    </fragment>
 </navigation>
