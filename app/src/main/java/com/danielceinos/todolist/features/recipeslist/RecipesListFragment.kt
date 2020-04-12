@@ -4,13 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.MergeAdapter
 import com.danielceinos.todolist.databinding.FragmentRecipesListBinding
 import com.danielceinos.todolist.di.viewModel
 import com.danielceinos.todolist.features.base.BaseFragment
+import com.danielceinos.todolist.features.recipeslist.FooterAdapter.FooterState
 import com.hoopcarpool.fluxy.Result
 
 
@@ -37,36 +37,22 @@ class RecipesListFragment : BaseFragment() {
             viewModel.markFavorite(it.id)
         }
 
-        val loaderAdapter = LoadRecipesAdapter {
-            viewModel.loadRecipes()
-        }
-
-        val errorAdapter = ErrorRecipesAdapter {
+        val footerAdapter = FooterAdapter {
             viewModel.loadRecipes()
         }
 
         binding.recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        binding.recipesRecyclerView.adapter = MergeAdapter(recipesAdapter, loaderAdapter, errorAdapter)
+        binding.recipesRecyclerView.adapter = MergeAdapter(recipesAdapter, footerAdapter)
 
         viewModel.getLiveData().observe {
             when (it) {
                 is Result.Success -> {
                     recipesAdapter.submitList(it.value.recipes)
-                    loaderAdapter.loading = false
-                    loaderAdapter.canLoadMore = !it.value.cached
-                    errorAdapter.error = it.value.cached
+                    footerAdapter.state = if (it.value.cached) FooterState.ERROR else FooterState.LOADED
                 }
-                is Result.Loading -> {
-                    Toast.makeText(requireContext(), "loading", Toast.LENGTH_SHORT).show()
-                    loaderAdapter.loading = true
-                }
-                is Result.Failure -> {
-                    Toast.makeText(requireContext(), "failure", Toast.LENGTH_SHORT).show()
-                    loaderAdapter.loading = false
-                    errorAdapter.error = true
-                }
+                is Result.Loading -> footerAdapter.state = FooterState.LOADING
+                is Result.Failure -> footerAdapter.state = FooterState.ERROR
                 is Result.Empty -> {
-                    Toast.makeText(requireContext(), "empty", Toast.LENGTH_SHORT).show()
                 }
             }
         }
