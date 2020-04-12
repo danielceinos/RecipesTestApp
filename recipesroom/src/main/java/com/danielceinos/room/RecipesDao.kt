@@ -1,29 +1,28 @@
 package com.danielceinos.room
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
+import androidx.room.*
+
+@Entity(tableName = "recipes")
+data class Recipe(
+    @ColumnInfo(name = "title") val title: String,
+    @ColumnInfo(name = "ingredients") val ingredients: String,
+    @ColumnInfo(name = "thumbnailUrl") val thumbnailUrl: String
+) {
+
+    @PrimaryKey
+    var uid: Int = title.hashCode()
+}
 
 @Dao
 interface RecipesDao {
 
     @Query("SELECT * FROM recipes ORDER BY uid ASC")
-    fun getRecipes(): Flow<List<Recipe>>
+    fun getRecipes(): List<Recipe>
 
-    @Query("SELECT * FROM recipes ORDER BY uid ASC")
-    fun getRecipesSync(): List<Recipe>
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(recipe: Recipe)
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAll(recipes : List<Recipe>)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(recipes: List<Recipe>)
 
-    @Query("DELETE FROM recipes")
-    suspend fun deleteAll()
-
-    @Query("UPDATE recipes SET fav = :fav WHERE uid = :uid")
-    fun markFavorite(uid: Int, fav: Boolean)
 }

@@ -2,6 +2,7 @@ package com.danielceinos.todolist.features.recipeslist
 
 import androidx.lifecycle.viewModelScope
 import com.danielceinos.notesdomain.flux.FetchRecipesAction
+import com.danielceinos.notesdomain.flux.MarkRecipeFavoriteAction
 import com.danielceinos.notesdomain.flux.RecipesStore
 import com.danielceinos.todolist.features.base.BaseViewModel
 import com.hoopcarpool.fluxy.Dispatcher
@@ -23,13 +24,14 @@ class RecipesListViewModel(
                     val result: Result<RecipesListViewState> = when (it) {
                         is Result.Success -> Result.Success(
                             RecipesListViewState(
-                                it.value.map {
+                                recipes = it.value.map { recipe ->
                                     RecipesListViewState.Recipe(
-                                        id = it.uid,
-                                        title = it.title,
-                                        fav = it.fav
+                                        id = recipe.uid,
+                                        title = recipe.title,
+                                        fav = recipe.fav
                                     )
-                                }
+                                },
+                                cached = recipesStore.state.isCached
                             )
                         )
                         is Result.Loading -> Result.Loading()
@@ -45,9 +47,13 @@ class RecipesListViewModel(
     fun loadRecipes() {
         dispatcher.dispatch(FetchRecipesAction(false))
     }
+
+    fun markFavorite(uid: Int) {
+        dispatcher.dispatch(MarkRecipeFavoriteAction(uid))
+    }
 }
 
 
-data class RecipesListViewState(val recipes: List<Recipe>) {
+data class RecipesListViewState(val recipes: List<Recipe>, val cached: Boolean) {
     data class Recipe(val id: Int, val title: String, val fav: Boolean)
 }

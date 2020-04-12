@@ -13,6 +13,6 @@ object RoomModule {
         }
 
         bind<RecipesDao>() with singleton { instance<RecipesDatabase>().recipesDao() }
-
+        bind<FavoriteRecipeDao>() with singleton { instance<RecipesDatabase>().favoriteRecipesDao() }
     }
 }

@@ -9,6 +9,6 @@ import org.kodein.di.generic.singleton
 
 object RecipesRepositoryModule {
     fun create() = Kodein.Module("RecipesRepositoryModule", true) {
-        bind<RecipesRepository>() with singleton { RecipesRepositoryImpl(instance(), instance()) }
+        bind<RecipesRepository>() with singleton { RecipesRepositoryImpl(instance(), instance(), instance()) }
     }
 }

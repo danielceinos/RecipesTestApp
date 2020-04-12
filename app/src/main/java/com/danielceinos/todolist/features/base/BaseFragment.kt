@@ -20,7 +20,7 @@ open class BaseFragment : Fragment(), KodeinAware {
             if (log) {
                 Timber.d(
                     """
-
+   
                     ┌────────────────────────────────────────────
                     |─> ${it.toString()}
                     └────────────────────────────────────────────

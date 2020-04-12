@@ -13,13 +13,27 @@ data class RecipesState(
 class RecipesStore(private val recipesController: RecipesController) : FluxyStore<RecipesState>() {
     override fun init() {
         reduce<FetchRecipesAction> {
-            val recipes = (state.recipes as? Result.Success)?.value ?: emptyList()
+
+            val recipes = when (val recipes = state.recipes) {
+                is Result.Loading -> return@reduce
+                is Result.Success -> recipes.value
+                is Result.Failure -> recipes.value ?: emptyList()
+                is Result.Empty -> emptyList()
+            }
             newState = state.copy(recipes = Result.Loading())
-            recipesController.getRecipes(state.pageLoaded + 1, recipes, it.useOnlyCached)
+            recipesController.getRecipes(state.pageLoaded + 1, recipes, state.isCached, it.useOnlyCached)
         }
 
         reduce<RecipesFetchedAction> {
-            newState = state.copy(recipes = it.result, pageLoaded = it.page)
+            newState = state.copy(recipes = it.result, pageLoaded = it.page, isCached = it.isCached)
+        }
+
+        reduce<MarkRecipeFavoriteAction> {
+            recipesController.markFavorite(it.recipeId, state.recipes)
+        }
+
+        reduce<MarkRecipeFavoriteCompleteAction> {
+            newState = state.copy(recipes = it.result)
         }
     }
 }
