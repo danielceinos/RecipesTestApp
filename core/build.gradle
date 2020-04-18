@@ -35,7 +35,7 @@ dependencies {
     implementation 'org.kodein.di:kodein-di-generic-jvm:6.5.4'
 
     /** Fluxy */
-    implementation "com.github.hoop-carpool.fluxy:fluxy:0.1.0"
+    implementation "com.github.hoop-carpool.fluxy:fluxy:0.1.3"
     implementation "com.github.hoop-carpool.fluxy:timberlogger:0.1.0"
 
     /** Utils */
