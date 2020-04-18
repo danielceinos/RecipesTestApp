@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.danielceinos.todolist.databinding.RecipeRowBinding
 import com.danielceinos.todolist.features.recipeslist.RecipesListViewState.Recipe
 
@@ -31,6 +32,7 @@ class RecipesAdapter(
                 binding.recipeRowCard.setOnClickListener {
                     onItemClickListener(this)
                 }
+                Glide.with(binding.root.context).load(imageUrl).into(binding.recipeImage)
             }
 
             //TODO: use check listener

@@ -35,14 +35,12 @@ class RecipesListFragment : BaseFragment() {
 
 
         val recipesAdapter = RecipesAdapter({
-            findNavController().navigate(RecipesListFragmentDirections.actionListFragmentToDetailFragment(it.id))
+            findNavController().navigate(RecipesListFragmentDirections.actionListFragmentToDetailFragment(it.id, it.title))
         }, {
             viewModel.markFavorite(it.id)
         })
 
-        val footerAdapter = FooterAdapter {
-            viewModel.loadRecipes()
-        }
+        val footerAdapter = FooterAdapter { viewModel.loadRecipes() }
 
         binding.recipesRecyclerView.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         binding.recipesRecyclerView.adapter = MergeAdapter(recipesAdapter, footerAdapter)

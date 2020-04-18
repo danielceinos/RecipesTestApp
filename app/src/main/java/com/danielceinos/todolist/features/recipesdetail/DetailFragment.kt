@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.danielceinos.todolist.databinding.FragmentDetailBinding
+import com.danielceinos.todolist.databinding.IngredientChipBinding
 import com.danielceinos.todolist.di.viewModel
 import com.danielceinos.todolist.features.base.BaseFragment
+import com.google.android.material.chip.Chip
 import com.hoopcarpool.fluxy.Result
 
 
@@ -28,24 +30,14 @@ class DetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.setup(args)
+        setToolbarTitle(args.recipeTitle)
 
         viewModel.getLiveData().observe {
             when (it) {
-                is Result.Success -> {
-                    Glide.with(this).load(it.value.imageUrl).into(binding.recipeDetailImage)
-                    binding.recipeDetailTitle.text = it.value.title
-                    binding.recipeDetailFavoriteButton.setImageDrawable(
-                        if (it.value.favorite) {
-                            resources.getDrawable(android.R.drawable.btn_star_big_on)
-                        } else {
-                            resources.getDrawable(android.R.drawable.btn_star_big_off)
-                        }
-                    )
-                }
+                is Result.Success -> renderSuccessState(it.value)
                 is Result.Loading -> {
                 }
                 is Result.Failure -> {
-
                 }
                 is Result.Empty -> {
                 }
@@ -54,6 +46,26 @@ class DetailFragment : BaseFragment() {
 
         binding.recipeDetailFavoriteButton.setOnClickListener {
             viewModel.markFavoriteRecipe()
+        }
+    }
+
+    private fun renderSuccessState(viewData: RecipeDetailViewModel.RecipeDetailViewState) {
+        Glide.with(this).load(viewData.imageUrl).into(binding.recipeDetailImage)
+        setToolbarTitle(viewData.title)
+        binding.recipeDetailTitle.text = viewData.title
+        binding.recipeDetailFavoriteButton.setImageDrawable(
+            if (viewData.favorite) {
+                resources.getDrawable(android.R.drawable.btn_star_big_on)
+            } else {
+                resources.getDrawable(android.R.drawable.btn_star_big_off)
+            }
+        )
+
+        binding.ingredientsChipGroup.removeAllViews()
+        viewData.ingredients.forEach {
+            val chip = IngredientChipBinding.inflate(layoutInflater).root as Chip
+            chip.text = it
+            binding.ingredientsChipGroup.addView(chip)
         }
     }
 }

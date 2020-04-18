@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="com.danielceinos.todolist.features.recipeslist.RecipesListFragment"
-        android:label="Listado"
-        tools:layout="@layout/fragment_recipes_list" >
+        android:label="Recipes"
+        tools:layout="@layout/fragment_recipes_list">
         <action
             android:id="@+id/action_listFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -22,5 +22,8 @@
         <argument
             android:name="recipeid"
             app:argType="integer" />
+        <argument
+            android:name="recipeTitle"
+            app:argType="string" />
     </fragment>
 </navigation>

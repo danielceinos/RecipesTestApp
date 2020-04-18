@@ -20,6 +20,6 @@ fun domainRecipeFrom(
         uid = roomRecipe.uid,
         title = roomRecipe.title,
         thumbnailUrl = roomRecipe.thumbnailUrl,
-        ingredients = roomRecipe.ingredients.split(","),
+        ingredients = roomRecipe.ingredients.split(",").map { it.trim() },
         fav = roomFavoriteRecipe?.fav ?: false
     )

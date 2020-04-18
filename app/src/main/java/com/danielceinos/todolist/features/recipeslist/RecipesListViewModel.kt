@@ -28,7 +28,8 @@ class RecipesListViewModel(
                                     RecipesListViewState.Recipe(
                                         id = recipe.uid,
                                         title = recipe.title,
-                                        fav = recipe.fav
+                                        fav = recipe.fav,
+                                        imageUrl = recipe.thumbnailUrl
                                     )
                                 },
                                 cached = recipesStore.state.isCached
@@ -55,5 +56,5 @@ class RecipesListViewModel(
 
 
 data class RecipesListViewState(val recipes: List<Recipe>, val cached: Boolean) {
-    data class Recipe(val id: Int, val title: String, val fav: Boolean)
+    data class Recipe(val id: Int, val title: String, val fav: Boolean, val imageUrl: String)
 }

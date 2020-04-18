@@ -30,4 +30,8 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         findViewById<Toolbar>(R.id.toolBar).setupWithNavController(findNavController(R.id.nav_host_fragment))
     }
 
+    fun setToolbarTitle(title: String) {
+        findViewById<Toolbar>(R.id.toolBar).title = title
+    }
+
 }

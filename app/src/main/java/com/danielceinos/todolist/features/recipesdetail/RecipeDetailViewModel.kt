@@ -33,7 +33,8 @@ class RecipeDetailViewModel(
                                     RecipeDetailViewState(
                                         title = recipe.title,
                                         imageUrl = recipe.thumbnailUrl,
-                                        favorite = recipe.fav
+                                        favorite = recipe.fav,
+                                        ingredients = recipe.ingredients
                                     )
                                 )
                             )
@@ -53,5 +54,10 @@ class RecipeDetailViewModel(
         dispatcher.dispatch(MarkRecipeFavoriteAction(fragmentArgs.recipeid))
     }
 
-    data class RecipeDetailViewState(val imageUrl: String, val title: String, val favorite: Boolean)
+    data class RecipeDetailViewState(
+        val imageUrl: String,
+        val title: String,
+        val favorite: Boolean,
+        val ingredients: List<String>
+    )
 }
